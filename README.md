@@ -23,6 +23,7 @@ Security teams need an automated way to:
 │   ├── misp_domain_rule.xml # QRadar rule for malicious domain detection
 │── README.md               # Documentation
 │── requirements.txt        # Dependencies
+
 ```
 
 ## Installation and Setup
@@ -59,21 +60,7 @@ To ensure continuous updates, `schedulermisp.py`:
 ### 7. Run as a Service
 To run `schedulermisp.py` as a system service:
 1. Create a systemd service file (for Linux):
-    ```ini
-    [Unit]
-    Description=Run MISP IOC Checker Script
-    
-    [Service]
-    Type=simple
-    WorkingDirectory=/Pathtoschedulerfile/MISP-Qradar-Integration
-    ExecStart=/bin/bash -c 'source /etc/venv/bin/activate && python3 schedulerMisp.py'
-    Restart=always
-    StandardOutput=file:/var/log/misp_ioc_checker.log
-    StandardError=file:/var/log/misp_ioc_checker.err
-    
-    [Install]
-    WantedBy=multi-user.target
-    ```
+    misp-qradar.service
 2. Enable and start the service:
     ```bash
     sudo systemctl enable misp-qradar.service
