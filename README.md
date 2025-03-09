@@ -12,7 +12,7 @@ Security teams need an automated way to:
 
 ## Project Structure
 ```
-/your_project_directory
+/MISPSIEMINTEGRATION
 │── fetch_misp_data.py      # Fetches IOCs from MISP
 │── update_qradar_refrenceset.py        # Updates QRadar reference sets
 │── update_firewall_domain.py      # Appends malicious domains to firewall
