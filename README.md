@@ -41,8 +41,8 @@ pip install Requirement.txt
 
 ### 3. Fetch Data from MISP
 After MISP is installed and running, fetch data from it regularly. This is handled by `fetch_misp_data.py`, which retrieves IOCs like IPs, domains, and file hashes.
+Change these Addresse on code
 ```
-    change these
     MISP_URL = "https://MISPIP/attributes/restSearch/json"
     MISP_API_KEY = "MISPAPI"
 ```
