@@ -65,18 +65,18 @@ def run_ioc_process():
     fetch_iocs_to_csv(MISP_URL, MISP_API_KEY, 'filename.csv', ioc_type='filename' , category='Payload delivery' , last='1d')
 
     # Process IP source IOCs
-    process_csv('ip_src.csv', 'MISP_IPsrc')
+    process_csv('ip_src.csv', 'MISP_Malicious_IPs')
     # Process IP destination IOCs
-    process_csv('ip_dst.csv', 'MISP_IPdst')
+    process_csv('ip_dst.csv', 'MISP_Malicious_IPs')
     # Process domain IOCs
-    process_csv('domain.csv', 'MISP_Domain')
+    process_csv('domain.csv', 'MISP_Malicious_Domains')
     # Process URL IOCs
-    process_csv('url.csv', 'MISP_url')
+    process_csv('url.csv', 'MISP_URL')
     # Process MD5 hash IOCs
     process_csv('md5.csv', 'MISP_MD5')
     # Process SHA256 hash IOCs
-    process_csv('sha256.csv', 'MISP_sha256')
-    process_csv('filename.csv', 'MISP_filename')
+    process_csv('sha256.csv', 'MISP_Malicious_Hashes')
+    process_csv('filename.csv', 'MISP_FILENAME')
 
 if __name__ == "__main__":
     run_ioc_process()
