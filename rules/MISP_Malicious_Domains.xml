@@ -1,0 +1,2 @@
+When an event is detected where:
+- URL (custom) OR DNS Request is contained in Reference Set "MISP_Malicious_Domains"
