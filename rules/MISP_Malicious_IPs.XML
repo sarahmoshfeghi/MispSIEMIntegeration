@@ -1,0 +1,2 @@
+When an event is detected where:
+- Source IP OR Destination IP is contained in Reference Set "MISP_Malicious_IPs"
