@@ -1,7 +1,7 @@
  GNU nano 6.2                                                                                                                                              MispToQradarRefrence.py
 import requests
 import pandas as pd
-from misp_fetch import fetch_iocs_to_csv
+from fetch_misp_data import fetch_iocs_to_csv
 
 # Configuration
 qradar_url = 'URL'
