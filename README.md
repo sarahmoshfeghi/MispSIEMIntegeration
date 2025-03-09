@@ -35,7 +35,7 @@ If you haven't set up MISP yet, follow the installation steps in the **SOAR Proj
 ### 2. Install Dependencies
 Make sure you have the required Python libraries:
 ```bash
-pip install mispfetch flask requests schedule
+pip install Requirement.txt
 ```
 
 ### 3. Fetch Data from MISP
