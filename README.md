@@ -45,9 +45,17 @@ After MISP is installed and running, fetch data from it regularly. This is handl
     MISP_API_KEY = "MISPAPI"
 ```
 ### 4. Write Data to QRadar Reference Sets
-`update_qradar.py` processes and updates the reference sets on QRadar:
+`update_qradar_refrenceset.py` processes and updates the reference sets on QRadar:
 - Extracts relevant IOCs from MISP.
 - Writes them to specific reference sets on QRadar.
+- change these on code
+  ```
+  # Configuration
+    qradar_url = 'URL'
+    api_token = 'APISIEM'
+    MISP_URL = "https://MISPIP/attributes/restSearch/json"
+    MISP_API_KEY = "MISPAPI"
+  ```
 
 ### 5. Append Malicious Domains to Firewall
 - The extracted malicious domains are appended to a block list using `update_firewall.py`.
