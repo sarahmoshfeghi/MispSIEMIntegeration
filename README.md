@@ -39,7 +39,11 @@ pip install mispfetch flask requests schedule
 
 ### 3. Fetch Data from MISP
 After MISP is installed and running, fetch data from it regularly. This is handled by `fetch_misp_data.py`, which retrieves IOCs like IPs, domains, and file hashes.
-
+```
+    change these
+    MISP_URL = "https://MISPIP/attributes/restSearch/json"
+    MISP_API_KEY = "MISPAPI"
+```
 ### 4. Write Data to QRadar Reference Sets
 `update_qradar.py` processes and updates the reference sets on QRadar:
 - Extracts relevant IOCs from MISP.
