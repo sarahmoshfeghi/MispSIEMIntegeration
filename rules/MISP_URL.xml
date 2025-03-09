@@ -1,0 +1,2 @@
+Apply MISP URL IOC on events which are detected by the Local system
+and when any of Domain, URL (custom), URL Host (custom), UrlHost (custom) are contained in any of MISP_URL - AlphaNumeric
