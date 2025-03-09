@@ -61,7 +61,12 @@ After MISP is installed and running, fetch data from it regularly. This is handl
 ### 5. Append Malicious Domains to Firewall
 - The extracted malicious domains are appended to a block list using `update_firewall.py`.
 - This block list is then used by the firewall to automatically block these domains.
-- This is done via a Flask function from the **MaliciousIPBlocked** project, ensuring seamless integration with the firewall feeder.
+- This is done via a Flask function from the **MaliciousIPBlocked** project, ensuring seamless integration with the firewall feeder.\
+- chenge these on code
+  ```
+    source_file = '/PathtotheDomainFIle/domain.csv'  # Update path for domains source CSV
+    target_file = '/PathtotheDomainFIle/mispdomain.csv'    # Update path for target CSV
+  ```
 
 ### 6. Automate with `schedulermisp.py`
 To ensure continuous updates, `schedulermisp.py`:
