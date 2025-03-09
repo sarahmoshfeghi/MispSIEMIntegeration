@@ -1,4 +1,3 @@
-Qradar refrence SEt 
 # MISP IOC Integration with QRadar Reference Set
 
 ## Overview
