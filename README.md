@@ -74,6 +74,10 @@ To ensure continuous updates, `schedulermisp.py`:
 - Fetches data from MISP daily.
 - Updates QRadar and the firewall accordingly.
 - Uses Python's `schedule` library to automate execution.
+- change this
+  ```
+   WorkingDirectory=/Pathtoschedulerfile/MISP-Qradar-Integration
+  ```
 
 ### 7. Run as a Service
 To run `schedulermisp.py` as a system service:
