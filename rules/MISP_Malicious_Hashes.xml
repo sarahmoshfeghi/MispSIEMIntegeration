@@ -1,0 +1,2 @@
+When an event is detected where:
+- File Hash (custom) OR Process Hash (custom) is contained in Reference Set "MISP_Malicious_Hashes"
