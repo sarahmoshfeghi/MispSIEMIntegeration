@@ -61,13 +61,15 @@ To run `schedulermisp.py` as a system service:
 1. Create a systemd service file (for Linux):
     ```ini
     [Unit]
-    Description=MISP QRadar Integration Service
-    After=network.target
+    Description=Run MISP IOC Checker Script
     
     [Service]
-    ExecStart=/usr/bin/python3 /path/to/schedulermisp.py
+    Type=simple
+    WorkingDirectory=/Pathtoschedulerfile/MISP-Qradar-Integration
+    ExecStart=/bin/bash -c 'source /etc/venv/bin/activate && python3 schedulerMisp.py'
     Restart=always
-    User=root
+    StandardOutput=file:/var/log/misp_ioc_checker.log
+    StandardError=file:/var/log/misp_ioc_checker.err
     
     [Install]
     WantedBy=multi-user.target
