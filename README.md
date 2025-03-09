@@ -1,5 +1,4 @@
 Qradar refrence SEt 
-site : https://github.com/flybug8/MISP-Qradar-Integration
 # MISP IOC Integration with QRadar Reference Set
 
 ## Overview
@@ -16,8 +15,8 @@ Security teams need an automated way to:
 ```
 /your_project_directory
 │── fetch_misp_data.py      # Fetches IOCs from MISP
-│── update_qradar.py        # Updates QRadar reference sets
-│── update_firewall.py      # Appends malicious domains to firewall
+│── update_qradar_refrenceset.py        # Updates QRadar reference sets
+│── update_firewall_domain.py      # Appends malicious domains to firewall
 │── schedulermisp.py        # Automates execution via scheduler
 │── rules/
 │   ├── misp_md5_rule.xml   # QRadar rule for MD5 hash detection
