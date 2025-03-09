@@ -4,4 +4,7 @@ pymisp
 logging
 re
 CSV
+pandas
+Request
+json
 
