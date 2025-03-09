@@ -2,69 +2,93 @@
 Qradar refrence SEt 
 site : https://github.com/flybug8/MISP-Qradar-Integration
 MISP_MD5 MISP_IPdst MISP_sha256 MISP_Domain MISP_IPsrc MISP_url MISP_filename
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+# MISP IOC Integration with QRadar Reference Set
 
-</head>
-<body>
+## Overview
+This project integrates MISP (Malware Information Sharing Platform) with QRadar by fetching threat intelligence data (IOCs) and updating QRadar reference sets accordingly. Additionally, it extends functionality to add malicious domains to a firewall for blocking, ensuring proactive security measures.
 
-<h1>MISP-Qradar-Integration</h1>
+## Purpose
+Security teams need an automated way to:
+- Fetch Indicators of Compromise (IOCs) from MISP regularly.
+- Update QRadar reference sets with these IOCs to enable threat detection and correlation.
+- Append malicious domains to a firewall block list.
+- Automate the entire process using a scheduled service.
 
-<p>Hello everyone!</p>
+## Prerequisites
+Before running this integration, ensure you have the following:
+- A working **MISP** instance (configured via Docker as part of the SOAR project).
+- **QRadar SIEM** with API access enabled.
+- A **firewall** that supports feeder lists for blocking malicious domains.
+- **Python 3.x** installed with required dependencies.
 
-<p>I wanted to inform you about some recent updates to MISP-Qradar-Integration repository.</p>
+## Installation and Setup
 
-<h2>Repository Overview:</h2>
+### 1. Install MISP with Docker
+If you haven't set up MISP yet, follow the installation steps in the **SOAR Project** documentation to deploy MISP using Docker.
 
-<p><strong>Repository Name:</strong> MISP-Qradar-Integration</p>
-<p><strong>Repository Type:</strong> Public</p>
-<p><strong>GitHub Repository URL:</strong> <a href="https://github.com/flybug8/MISP-Qradar-Integration">flybug8/MISP-Qradar-Integration</a></p>
+### 2. Install Dependencies
+Make sure you have the required Python libraries:
+```bash
+pip install mispfetch flask requests schedule
+```
 
-<h2>Files and Folders Overview:</h2>
-<pre>
-Dockerfile.txt
-LICENSE
-README.md
-docker-compose.yml
-master_qradar_misp_MD5.py
-master_qradar_misp_SHA256.py
-master_qradar_misp_domain.py
-master_qradar_misp_ipdst.py
-master_qradar_misp_ipsrc.py
-master_qradar_misp_url.py
-misp2qradar.py
-requirements.txt
-</pre>
+### 3. Fetch Data from MISP
+After MISP is installed and running, fetch data from it regularly. This is handled by the `mispfetch` library, which retrieves IOCs like IPs, domains, and file hashes.
 
-<h2>Project Description:</h2>
+### 4. Write Data to QRadar Reference Sets
+A separate Python script updates the reference sets on QRadar:
+- Extracts relevant IOCs from MISP.
+- Writes them to specific reference sets on QRadar.
 
-<p><strong>MISP-QRADAR-REFERENCE-SET-BUILDER</strong> is a project that pulls IOCs (Indicators of Compromise) from MISP (Malware Information Sharing Platform) and adds them to reference sets in QRadar. It includes a Docker Compose file that builds containers for each script, making deployment easier.</p>
+### 5. Append Malicious Domains to Firewall
+- The extracted malicious domains are appended to a block list.
+- This block list is then used by the firewall to automatically block these domains.
+- This is done via a Flask function from the **MaliciousIPBlocked** project, which ensures seamless integration with the firewall feeder.
 
-<h2>Credits:</h2>
-<p>Special thanks to <strong>@derinsiderx</strong> on Twitter for contributing the awesome new script!</p>
+### 6. Automate with `schedulermisp.py`
+To ensure continuous updates, `schedulermisp.py`:
+- Runs as a scheduled service.
+- Fetches data from MISP daily.
+- Updates QRadar and the firewall accordingly.
+- Uses Python's `schedule` library to automate execution.
 
-<h2>Dependencies:</h2>
+### 7. Run as a Service
+To run `schedulermisp.py` as a system service:
+1. Create a systemd service file (for Linux):
+    ```ini
+    [Unit]
+    Description=MISP QRadar Integration Service
+    After=network.target
+    
+    [Service]
+    ExecStart=/usr/bin/python3 /path/to/schedulermisp.py
+    Restart=always
+    User=root
+    
+    [Install]
+    WantedBy=multi-user.target
+    ```
+2. Enable and start the service:
+    ```bash
+    sudo systemctl enable misp-qradar.service
+    sudo systemctl start misp-qradar.service
+    ```
 
-<p>- Python 3 with pip</p>
-<p>- Cron</p>
-<p>- Docker</p>
+## Usage
+Once the setup is complete, the integration will automatically:
+- Fetch IOCs from MISP daily.
+- Update QRadar reference sets with malicious IPs, domains, and file hashes.
+- Append malicious domains to the firewall block list.
+- Ensure automated blocking through the firewall feeder.
 
-<h2>Installation Steps:</h2>
+## Future Enhancements
+- Add logging and monitoring capabilities.
+- Enhance error handling and retry mechanisms.
+- Expand integration to support additional security platforms.
 
-<pre>
-1. Install Python dependencies by running:
-    pip install -r requirements.txt
+## Contributing
+If you have improvements or bug fixes, feel free to submit a pull request!
 
-2. Start the Docker containers by running:
-    docker-compose up
+## License
+This project is licensed under the MIT License.
 
-3. Ensure to customize the `docker-compose.yml` file according to your requirements and replace `< >` fields with the correct credentials.
-</pre>
-
-<p>Feel free to reach out if you have any questions or suggestions!</p>
-
-</body>
-</html>
