@@ -60,7 +60,7 @@ Change these Addresse on code
   ```
 
 ### 5. Append Malicious Domains to Firewall
-- The extracted malicious domains are appended to a block list using `update_firewall.py`.
+- The extracted malicious domains are appended to a block list using `update_firewall_domain.py`.
 - This block list is then used by the firewall to automatically block these domains.
 - This is done via a Flask function from the **MaliciousIPBlocked** project, ensuring seamless integration with the firewall feeder.\
 - chenge these on code
