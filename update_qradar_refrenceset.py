@@ -1,4 +1,3 @@
- GNU nano 6.2                                                                                                                                              MispToQradarRefrence.py
 import requests
 import pandas as pd
 from fetch_misp_data import fetch_iocs_to_csv
