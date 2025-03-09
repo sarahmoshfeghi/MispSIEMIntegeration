@@ -95,11 +95,7 @@ To apply the fetched IOCs effectively, we define QRadar rules stored in the `rul
 
 ### **1. Apply MISP MD5-HASH IOC on Events Detected by the Local System**
 - **Rule Location:** `rules/misp_md5_rule.xml`
-- **Logic:**
-  ```
-  When an event is detected where:
-  - (MD5 Hash (custom) OR File Hash (custom) OR Process Hash (custom)) is contained in Reference Set "MISP_MD5"
-  - AND the event is detected by Local System
+ event is detected by Local System
   ```
 - **Actions:**
   - Trigger an alert (Offense in QRadar)
@@ -107,11 +103,7 @@ To apply the fetched IOCs effectively, we define QRadar rules stored in the `rul
 
 ### **2. Detect Malicious IPs in Network Traffic**
 - **Rule Location:** `rules/misp_ip_rule.xml`
-- **Logic:**
-  ```
-  When an event is detected where:
-  - Source IP OR Destination IP is contained in Reference Set "MISP_Malicious_IPs"
-  ```
+
 - **Actions:**
   - Generate an alert and create an offense
   - Send an email notification
@@ -119,11 +111,7 @@ To apply the fetched IOCs effectively, we define QRadar rules stored in the `rul
 
 ### **3. Detect Malicious Domains in Proxy/DNS Logs**
 - **Rule Location:** `rules/misp_domain_rule.xml`
-- **Logic:**
-  ```
-  When an event is detected where:
-  - URL (custom) OR DNS Request is contained in Reference Set "MISP_Malicious_Domains"
-  ```
+
 - **Actions:**
   - Generate an alert and create an offense
   - Send an email notification
@@ -131,15 +119,10 @@ To apply the fetched IOCs effectively, we define QRadar rules stored in the `rul
 
 ### **4. Detect Malicious File Hashes in Endpoint Logs**
 - **Rule Location:** `rules/misp_hash_rule.xml`
-- **Logic:**
-  ```
-  When an event is detected where:
-  - File Hash (custom) OR Process Hash (custom) is contained in Reference Set "MISP_Malicious_Hashes"
-  ```
+
 - **Actions:**
   - Generate an alert and create an offense
   - Send an alert to SIEM/SOAR
-  - Trigger an EDR action
 
 ## Future Enhancements
 - Add logging and monitoring capabilities.
@@ -149,7 +132,5 @@ To apply the fetched IOCs effectively, we define QRadar rules stored in the `rul
 ## Contributing
 If you have improvements or bug fixes, feel free to submit a pull request!
 
-## License
-This project is licensed under the MIT License.
 
 
