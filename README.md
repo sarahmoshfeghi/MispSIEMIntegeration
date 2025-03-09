@@ -31,6 +31,7 @@ Security teams need an automated way to:
 
 ### 1. Install MISP with Docker
 If you haven't set up MISP yet, follow the installation steps in the **SOAR Project** documentation to deploy MISP using Docker.
+https://github.com/sarahmoshfeghi/SOAR-Integration-Project/tree/main/MISP
 
 ### 2. Install Dependencies
 Make sure you have the required Python libraries:
