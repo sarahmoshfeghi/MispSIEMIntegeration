@@ -21,9 +21,10 @@ Security teams need an automated way to:
 │   ├── misp_md5_rule.xml   # QRadar rule for MD5 hash detection
 │   ├── misp_ip_rule.xml    # QRadar rule for malicious IP detection
 │   ├── misp_domain_rule.xml # QRadar rule for malicious domain detection
+│   ├── misp_filename_rule.xml # QRadar rule for malicious filename detection
+│   ├── misp_url_rule.xml    # QRadar rule for malicious URL detection
 │── README.md               # Documentation
 │── requirements.txt        # Dependencies
-
 ```
 
 ## Installation and Setup
