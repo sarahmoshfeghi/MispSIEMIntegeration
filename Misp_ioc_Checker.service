@@ -1,0 +1,13 @@
+[Unit]
+Description=Run MISP IOC Checker Script
+
+[Service]
+Type=simple
+WorkingDirectory=/Pathtoschedulerfile/MISP-Qradar-Integration
+ExecStart=/bin/bash -c 'source /etc/venv/bin/activate && python3 schedulerMisp.py'
+Restart=always
+StandardOutput=file:/var/log/misp_ioc_checker.log
+StandardError=file:/var/log/misp_ioc_checker.err
+
+[Install]
+WantedBy=multi-user.target
