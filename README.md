@@ -1,7 +1,5 @@
-# MispSIEMIntegeration
 Qradar refrence SEt 
 site : https://github.com/flybug8/MISP-Qradar-Integration
-MISP_MD5 MISP_IPdst MISP_sha256 MISP_Domain MISP_IPsrc MISP_url MISP_filename
 # MISP IOC Integration with QRadar Reference Set
 
 ## Overview
@@ -14,12 +12,20 @@ Security teams need an automated way to:
 - Append malicious domains to a firewall block list.
 - Automate the entire process using a scheduled service.
 
-## Prerequisites
-Before running this integration, ensure you have the following:
-- A working **MISP** instance (configured via Docker as part of the SOAR project).
-- **QRadar SIEM** with API access enabled.
-- A **firewall** that supports feeder lists for blocking malicious domains.
-- **Python 3.x** installed with required dependencies.
+## Project Structure
+```
+/your_project_directory
+│── fetch_misp_data.py      # Fetches IOCs from MISP
+│── update_qradar.py        # Updates QRadar reference sets
+│── update_firewall.py      # Appends malicious domains to firewall
+│── schedulermisp.py        # Automates execution via scheduler
+│── rules/
+│   ├── misp_md5_rule.xml   # QRadar rule for MD5 hash detection
+│   ├── misp_ip_rule.xml    # QRadar rule for malicious IP detection
+│   ├── misp_domain_rule.xml # QRadar rule for malicious domain detection
+│── README.md               # Documentation
+│── requirements.txt        # Dependencies
+```
 
 ## Installation and Setup
 
@@ -33,17 +39,17 @@ pip install mispfetch flask requests schedule
 ```
 
 ### 3. Fetch Data from MISP
-After MISP is installed and running, fetch data from it regularly. This is handled by the `mispfetch` library, which retrieves IOCs like IPs, domains, and file hashes.
+After MISP is installed and running, fetch data from it regularly. This is handled by `fetch_misp_data.py`, which retrieves IOCs like IPs, domains, and file hashes.
 
 ### 4. Write Data to QRadar Reference Sets
-A separate Python script updates the reference sets on QRadar:
+`update_qradar.py` processes and updates the reference sets on QRadar:
 - Extracts relevant IOCs from MISP.
 - Writes them to specific reference sets on QRadar.
 
 ### 5. Append Malicious Domains to Firewall
-- The extracted malicious domains are appended to a block list.
+- The extracted malicious domains are appended to a block list using `update_firewall.py`.
 - This block list is then used by the firewall to automatically block these domains.
-- This is done via a Flask function from the **MaliciousIPBlocked** project, which ensures seamless integration with the firewall feeder.
+- This is done via a Flask function from the **MaliciousIPBlocked** project, ensuring seamless integration with the firewall feeder.
 
 ### 6. Automate with `schedulermisp.py`
 To ensure continuous updates, `schedulermisp.py`:
@@ -74,12 +80,56 @@ To run `schedulermisp.py` as a system service:
     sudo systemctl start misp-qradar.service
     ```
 
-## Usage
-Once the setup is complete, the integration will automatically:
-- Fetch IOCs from MISP daily.
-- Update QRadar reference sets with malicious IPs, domains, and file hashes.
-- Append malicious domains to the firewall block list.
-- Ensure automated blocking through the firewall feeder.
+## QRadar Use Cases & Rules
+To apply the fetched IOCs effectively, we define QRadar rules stored in the `rules/` directory:
+
+### **1. Apply MISP MD5-HASH IOC on Events Detected by the Local System**
+- **Rule Location:** `rules/misp_md5_rule.xml`
+- **Logic:**
+  ```
+  When an event is detected where:
+  - (MD5 Hash (custom) OR File Hash (custom) OR Process Hash (custom)) is contained in Reference Set "MISP_MD5"
+  - AND the event is detected by Local System
+  ```
+- **Actions:**
+  - Trigger an alert (Offense in QRadar)
+  - Generate a log event
+
+### **2. Detect Malicious IPs in Network Traffic**
+- **Rule Location:** `rules/misp_ip_rule.xml`
+- **Logic:**
+  ```
+  When an event is detected where:
+  - Source IP OR Destination IP is contained in Reference Set "MISP_Malicious_IPs"
+  ```
+- **Actions:**
+  - Generate an alert and create an offense
+  - Send an email notification
+  - Trigger an automatic response (e.g., firewall block)
+
+### **3. Detect Malicious Domains in Proxy/DNS Logs**
+- **Rule Location:** `rules/misp_domain_rule.xml`
+- **Logic:**
+  ```
+  When an event is detected where:
+  - URL (custom) OR DNS Request is contained in Reference Set "MISP_Malicious_Domains"
+  ```
+- **Actions:**
+  - Generate an alert and create an offense
+  - Send an email notification
+  - Log the event for analysis
+
+### **4. Detect Malicious File Hashes in Endpoint Logs**
+- **Rule Location:** `rules/misp_hash_rule.xml`
+- **Logic:**
+  ```
+  When an event is detected where:
+  - File Hash (custom) OR Process Hash (custom) is contained in Reference Set "MISP_Malicious_Hashes"
+  ```
+- **Actions:**
+  - Generate an alert and create an offense
+  - Send an alert to SIEM/SOAR
+  - Trigger an EDR action
 
 ## Future Enhancements
 - Add logging and monitoring capabilities.
@@ -91,4 +141,5 @@ If you have improvements or bug fixes, feel free to submit a pull request!
 
 ## License
 This project is licensed under the MIT License.
+
 
